@@ -6,11 +6,10 @@ let notes = document.querySelector('#notes');//Lista divs com dados das notas
 let btnSaveNote = document.querySelector("#btn-save-note"); //icone para salvar nota
 let btnCloseModal = document.querySelector("#btn-close-note");//icone para fechar modal de edição de nota.
 
-//++++++++++++++++EVENTOS+++++++++++++++++++
-
 addNote.addEventListener('click',(evt)=>
 {
-  evt.preventDefault(); //PREVINE DA PÁGINA RECARREGAR COM O LINK
+  evt.preventDefault(); 
+  //faz que a pagina não recarregue
   modal.style.display='block';
   notes.style.display = 'none';
   addNote.style.display = 'none';
@@ -38,12 +37,12 @@ btnSaveNote.addEventListener('click', (evt) =>
 });
 
 
-//+++++++++++++++FUNÇÕES+++++++++++++++++++++
+//functions
 
 const saveNote = (note) =>{
   let listNotes = loadNotes();
 
-  if(note.id.trim().length < 1){
+  if(note.id.length < 1){
     note.id = new Date().getTime();
     document.querySelector('#input-id').value = note.id;
     listNotes.push(note);
@@ -55,7 +54,6 @@ const saveNote = (note) =>{
       }
     });
   }
-
   note.lastTime = new Date().getTime();
 
   console.log(listNotes)
@@ -63,36 +61,47 @@ const saveNote = (note) =>{
   localStorage.setItem('notes', listNotes);
 };
 
-const loadNotes = () => {
+const loadNotes = () =>{
   let listNotes = localStorage.getItem('notes');
+  console.log(listNotes);
+
   if(!listNotes){
     listNotes = [];
-  }else{
+  }
+  else{
     listNotes = JSON.parse(listNotes);
   }
+
   return listNotes;
 }
 
-const listNotes = () => {
-  let listNotes = loadNotes();
-  listNotes.forEach((item) => {
-  
+const listNotes = () =>{
+  let listNotes =loadNotes();
+  listNotes.forEach((item)=> {
     let divCard = document.createElement('div');
     divCard.className = 'card';
     divCard.style.width = '18rem';
     notes.appendChild(divCard);
+
     let divCardBody = document.createElement('div');
     divCardBody.className = 'card-body';
-    divCard.appendChild(divCardBody);
+    divCard.appendChild(divCardBody)
+
     let h1 = document.createElement('h1');
     h1.innerText = item.title;
     divCardBody.appendChild(h1);
-    let pContent = document.createElement('p');
-    pContent.innerText = item.content;
-    divCardBody.appendChild(pContent);
-    let pLastTime = document.createElement("p")
+
+    let pcontent = document.createElement('p');
+    pcontent.innerText = item.content;
+    divCardBody.appendChild(pcontent);
+
+    let pLastTime = document.createElement('p');
     pLastTime.innerText = item.lastTime;
     divCardBody.appendChild(pLastTime);
+
+    divCard.addEventListener('click',(evt)=>{
+        
+    });
   })
 };
 
