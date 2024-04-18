@@ -13,7 +13,6 @@ addNote.addEventListener('click',(evt)=>
   modal.style.display='block';
   notes.style.display = 'none';
   addNote.style.display = 'none';
-  addNote.style.color = '#ff03ab';
   document.querySelector("#input-id").value="";
   document.querySelector("#input-title").value="";
   document.querySelector("#input-content").value="";
@@ -143,6 +142,19 @@ aDelete.addEventListener('click', (evt) =>
   evt.preventDefault();
   deleteNote(note.id);
 });
+
+
+  let aEdit = document.createElement('a');
+  let iEdit = document.createElement('i');
+  iEdit.className = "bi bi-pencil-square";
+  aEdit.appendChild(iEdit);
+  document.querySelector('#controls-note').appendChild(aEdit);
+  aEdit.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    editNote(note);
+  });
+
+
 }
 
 const deleteNote = (id) => {
@@ -173,14 +185,17 @@ document.querySelector("#controls-note").innerHTML = " ";
   })
 
 
+  const editNote = (note) => {
+    modalView.style.display = 'none';
 
-
-
-const editNote = () => {
-  evt.preventDefault();
-  listNotes = loadNotes();
-  listNotes = JSON.stringify();
-  localStorage.setItem('notes', listNotes);
-};
+    document.querySelector("#input-id").value = note.id;
+    document.querySelector("#input-title").value = note.title;
+    document.querySelector("#input-content").value = note.content;
+    modal.style.display = 'block';
+    notes.style.display = 'none';
+    addNote.style.display = 'none';
+  }
+  
+  
 
 listNotes();
