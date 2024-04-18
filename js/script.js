@@ -13,15 +13,22 @@ addNote.addEventListener('click',(evt)=>
   modal.style.display='block';
   notes.style.display = 'none';
   addNote.style.display = 'none';
+  addNote.style.color = '#ff03ab';
+  document.querySelector("#input-id").value="";
+  document.querySelector("#input-title").value="";
+  document.querySelector("#input-content").value="";
 });
 
 btnCloseModal.addEventListener('click', (evt) =>
 {
   evt.preventDefault();
+  listNotes();
   modal.style.display='none';
   notes.style.display = 'flex';
   addNote.style.display = 'block';
 });
+
+
 
 btnSaveNote.addEventListener('click', (evt) =>
 {
@@ -42,6 +49,7 @@ btnSaveNote.addEventListener('click', (evt) =>
 const saveNote = (note) =>{
   let listNotes = loadNotes();
 
+  // saveNote.style.color = "#ff03ab";
   if(note.id.length < 1){
     note.id = new Date().getTime();
     document.querySelector('#input-id').value = note.id;
@@ -76,11 +84,13 @@ const loadNotes = () =>{
 }
 
 const listNotes = () =>{
+notes.innerHTML="";
   let listNotes =loadNotes();
   listNotes.forEach((item)=> {
     let divCard = document.createElement('div');
     divCard.className = 'card';
     divCard.style.width = '18rem';
+    divCard.style.borderColor = "#ff03ab";
     notes.appendChild(divCard);
 
     let divCardBody = document.createElement('div');
@@ -96,13 +106,81 @@ const listNotes = () =>{
     divCardBody.appendChild(pcontent);
 
     let pLastTime = document.createElement('p');
-    pLastTime.innerText = item.lastTime;
+    pLastTime.innerText = new Date(item.lastTime).toLocaleDateString();
     divCardBody.appendChild(pLastTime);
 
-    divCard.addEventListener('click',(evt)=>{
-        
+
+    divCard.addEventListener('click', (evt)=>{
+      evt.preventDefault();
+      showNotes(item);
     });
+    
   })
+};
+
+const showNotes = (note) => {
+  
+  document.querySelector('#title-note').innerHTML = "<h1>"+note.title+"</h1>";
+  document.querySelector('#content-note').innerHTML = "<p>"+note.content+"</p>";
+
+    modalView.style.display = "block";
+    notes.style.display = "none";
+    addNote.style.display = "none";
+
+    document.querySelector("#title-note").innerHTML += "<p> Ultima alteracao: " + new Date(note.lastTime).toLocaleDateString() + "</p>"
+
+document.querySelector("#controls-note").innerHTML = " ";
+
+let aDelete = document.createElement('a');
+let i = document.createElement('i');
+i.style.color = "#F00";
+i.className = "bi";
+i.className = "bi-trash";
+aDelete.appendChild(i);
+document.querySelector('#controls-note').appendChild(aDelete);
+aDelete.addEventListener('click', (evt) =>
+{
+  evt.preventDefault();
+  deleteNote(note.id);
+});
+}
+
+const deleteNote = (id) => {
+  let listNotes = loadNotes();
+  listNotes.forEach((note, index) => {
+    if (note.id === id){
+      listNotes.splice(index, 1);
+    }
+  });
+  localStorage.setItem('notes', JSON.stringify(listNotes)); 
+  location.reload(); 
+};
+
+
+document.querySelector("#controls-note").innerHTML = " ";
+
+  let aEdit = document.createElement ('a');
+  let iEdit = document.createElement('iEdit');
+  iEdit.style.color = "#ff03ab";
+  iEdit.style.cursor = "pointer";
+  iEdit.className = "bi";
+  iEdit.className = "bi-pen";
+  aEdit.appendChild(iEdit);
+  document.querySelector("#controls-note").appendChild(aEdit);
+
+  aEdit.addEventListener('click', (evt) => {
+    evt.preventDefault();
+  })
+
+
+
+
+
+const editNote = () => {
+  evt.preventDefault();
+  listNotes = loadNotes();
+  listNotes = JSON.stringify();
+  localStorage.setItem('notes', listNotes);
 };
 
 listNotes();

@@ -4,19 +4,35 @@
   }
   
   header{
-    border-bottom: 1px solid #1b85dc;
+    border-bottom: 1px solid #ff03ab;
     height: 10vh;
     display:flex;
   }
   
+  body{
+    background-color: #fcb0e3;
+  }
+
+  .bi{
+    color: #ff03ab;
+  }
+
   #logo{
     width: 30vw;
     height: 10vh;
   }
   
   #logo img{
-    height: 8vh;
+    height: 12vh;
+    margin-left: 7%;
+    width: 12vh;
+    margin-top: -2%;
   }
+
+  p{
+    color: #ff03ab;
+  }
+
   #display{
     width: 50vw;
   }
@@ -34,6 +50,9 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
   }
 
   /*
@@ -43,12 +62,20 @@
   .card a{
     text-decoration: none;
   }
+
+  .bi bi-plus-square-fill{
+    color: #ff03ab;
+  }
+
+  .card{
+    margin-bottom: 20px;
+  }
   
   #modal-view{
-    border:1px solid #1b85dc;
+    border:1px solid #ff03ab;
     position: absolute;
     display:none;
-    width: 90vw;
+    width: 96%;
     padding:10px;
    
   }
@@ -58,14 +85,26 @@
   }
   
   #modal{
-    border:1px solid #1b85dc;
+    border:1px solid #ff03ab;
     position: absolute;
     padding:2vh 2vw;
     display:none;
+    width: 96vw;
   }
   
   #controls-note{
     display:flex;
     gap:10px;
   }
+
+  .card :hover{
+    cursor: pointer;
+  }
+
+  .card-body{
+    margin: 10%;
+  }
   
+  .bi bi-plus-square-fill{
+    margin-left: 7%;
+  }
